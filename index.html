@@ -6002,5 +6002,51 @@ tab-content-0-1" class="folder-content">
   </div>
 
   
+
+  <script>
+    // 品类切换（在每个行业内）
+    function switchCategory(indPrefix, idx) {
+      const container = document.getElementById('industry-content-' + indPrefix);
+      // 兼容没有行业容器的情况：直接在整个文档中查找
+      let scope = container;
+      if (!container) {
+        scope = document;
+      }
+
+      const contents = scope.querySelectorAll('.folder-content');
+      contents.forEach(c => {
+        c.classList.remove('active');
+        c.style.display = 'none';
+      });
+
+      const target = document.getElementById('tab-content-' + indPrefix + '-' + idx);
+      if (target) {
+        target.classList.add('active');
+        target.style.display = 'block';
+      }
+
+      const tabs = scope.querySelectorAll('.folder-tab');
+      tabs.forEach(t => {
+        t.style.background = '#fff';
+        t.style.color = '#94a3b8';
+        t.style.borderColor = 'rgba(27,61,34,0.1)';
+        t.style.boxShadow = 'none';
+        t.style.zIndex = '0';
+      });
+
+      const activeTab = document.getElementById('tab-header-' + indPrefix + '-' + idx);
+      if (activeTab) {
+        const colorDeep = activeTab.getAttribute('data-color-deep') || '#1b3d22';
+        const shadow = activeTab.getAttribute('data-shadow') || 'rgba(27,61,34,0.08)';
+        activeTab.style.background = colorDeep;
+        activeTab.style.color = '#ffffff';
+        activeTab.style.borderColor = colorDeep;
+        activeTab.style.boxShadow = '0 -4px 10px ' + shadow;
+        activeTab.style.zIndex = '10';
+        activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  </script>
+
 </body>
 </html>
